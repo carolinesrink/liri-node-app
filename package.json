@@ -1,0 +1,27 @@
+{
+  "name": "gt-coding-bootcamp-march-2018",
+  "version": "1.0.0",
+  "description": "Class repository containing activities other supplemental content.",
+  "main": "index.js",
+  "dependencies": {
+    "child_process": "1.0.2",
+    "commander": "2.14.1",
+    "dotenv": "^5.0.1",
+    "left-pad": "1.2.0",
+    "node-spotify-api": "^1.0.7",
+    "request": "^2.85.0",
+    "twitter": "^1.7.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "pushLP": "node scripts/push.js -t LP -s full-time",
+    "pushSolved": "node scripts/push.js -t Solved -s full-time",
+    "pushUnsolved": "node scripts/push.js -t Unsolved -s full-time"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gt.bootcampcontent.com:GT-Coding-Boot-Camp/GTATL201803FSF2-FT-Class-Repository-FSF-FT.git"
+  },
+  "author": "Coding Bootcamp",
+  "license": "ISC"
+}
