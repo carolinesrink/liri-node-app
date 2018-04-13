@@ -1,9 +1,9 @@
 var Twitter = require("twitter");
 var Spotify = require("node-spotify-api");
-var request = require("request");
 var dotenv = require("dotenv");
 var keys = require("./keys.js");
-var spotify = new Spotify(keys.spotify);
+var request = require("request");
+var fs = require("fs");
 
 
 // var spotify = new Spotify(keys.spotify);
@@ -33,7 +33,9 @@ var getArtists = function (artist) {
 }
 
 function getSpotify(songName) {
-    songName = process.argv[3].slice();
+    songName = process.argv.slice(3);
+
+    var spotify = new Spotify(keys.spotify);
 
     spotify.search({
         type: "track",
@@ -54,19 +56,51 @@ function getSpotify(songName) {
     })
 }
 
+function getMovies(movieName) {
+    movieName = process.argv.slice(3);
+    request("http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy", function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var jsonData = JSON.parse(body);
+            console.log("Title: " + jsonData.Title);
+            console.log("Release Year: " + jsonData.Year);
+            console.log("IMDB Rating: " + jsonData.imdbRating);
+            console.log("Rotten Tomato Score: " + jsonData.tomatoRating);
+            console.log("Country: " + jsonData.Country);
+            console.log("Language: " + jsonData.Language);
+            console.log("Plot: " + jsonData.Plot);
+            console.log("Actors: " + jsonData.Actors);
+            console.log("---------------------------------------------");
+        }
+    })
+}
+
+function doWhatItSays() {
+    fs.readFile("random.txt", "utf8", function (error, data) {
+        if (error) {
+            console.log(error);
+        };
+        var dataArr = data.split(",");
+        if(dataArr.length == 2) {
+            pick(dataArr[0], dataArr[1]);
+        } else if (dataArr.length == 1) {
+            pick(dataArr[0]);
+        }
+    });
+}
+
 var pick = function (caseData, functionData) {
     switch (caseData) {
         case "my-tweets":
             getTweets();
             break;
         case "spotify-this-song":
-            getSpotify();
+            getSpotify(functionData);
             break;
         case "movie-this":
-            getMovies();
+            getMovies(functionData);
             break;
         case "do-what-it-says":
-            doIt();
+            doWhatItSays();
             break;
         default:
             console.log("Try another command.");
@@ -78,10 +112,3 @@ var runThis = function (argument1, argument2) {
 };
 
 runThis(process.argv[2], process.argv[3]);
-
-function getMovies(movieName) {
-    movieName = process.argv.slice(3);
-
-
-
-}
