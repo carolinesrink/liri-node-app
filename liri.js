@@ -44,7 +44,7 @@ function getSpotify(songName) {
         }
         var songs = data.tracks.items
         for (var i = 0; i < songs.length; i++) {
-            console.log("JS line 46: ", i);
+            console.log(i);
             console.log("Artist: " + songs[i].artists.map(getArtists));
             console.log("Song: " + songs[i].name);
             console.log("Preview Song: " + songs[i].preview_url);
@@ -78,3 +78,10 @@ var runThis = function (argument1, argument2) {
 };
 
 runThis(process.argv[2], process.argv[3]);
+
+function getMovies(movieName) {
+    movieName = process.argv.slice(3);
+
+
+
+}
